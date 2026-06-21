@@ -19,9 +19,6 @@ const Medidas = () => {
     descUnidad:''
   }
 
-    const [cod, setCod] = useState('');
-    const [desc, setDesc] = useState('');
-
   const [unidad, setUnidad] = useState(medida);
   //fin de registrar una nueva
 
@@ -70,10 +67,6 @@ const Medidas = () => {
           const respuesta = await clienteApi.post('/UnidadDeMedidas',unidad);
       }
 
-
- 
-    
-    
   };
 
 
@@ -86,8 +79,21 @@ const Medidas = () => {
     });
 
     setEditandoId(medidaSeleccionada.id);
+      
+    
 
+  };
 
+  //Eliminacion 
+
+    const manejarEliminacion = async (id) => {
+
+      if(!window.confirm('¿Eliminar?')){
+        return;
+      }
+
+     await clienteApi.delete(`/UnidadDeMedidas/${id}`);
+  
   };
 
 
@@ -106,7 +112,6 @@ const Medidas = () => {
                       value={unidad.codUnidad}
                       onChange={(e) => setUnidad({...unidad,codUnidad:e.target.value})}
                       required
-                      
                     />
                   </Form.Group>
        
@@ -150,6 +155,10 @@ const Medidas = () => {
 
                    <Button variant='primary' onClick={()=>manejarEdicion(medida)}>
                       Editar
+                   </Button>
+
+                   <Button variant='danger' onClick={()=>manejarEliminacion(medida.id)}>
+                      Eliminar
                    </Button>
 
                 </td>
