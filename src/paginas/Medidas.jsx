@@ -7,7 +7,7 @@ import clienteApi from '../servicios/api';
 const Medidas = () => {
   const { usuario, logout } = useAutenticacion();
   const navegar = useNavigate();
-  const [medidas, setMedidas] = useState([]);
+  const [medidas, setMedidas] = useState([]); // para guardar la lista de las unidades de medida consultadas
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
 //para editar, hay que guardar el id del elemento seleccionado
@@ -60,13 +60,20 @@ const Medidas = () => {
     const manejarEnvio = async (evento) => {
     evento.preventDefault();
     setError('');
+
+    // determinar si es actualizacion o registro nuevo
+
+      if(editandoId){
+          const respuesta = await clienteApi.put(`/UnidadDeMedidas/${editandoId}`,unidad);
+          setEditandoId(null);
+      }else{
+          const respuesta = await clienteApi.post('/UnidadDeMedidas',unidad);
+      }
+
+
  
     const respuesta = await clienteApi.post('/UnidadDeMedidas',unidad);
-    if (respuesta.ok) {
-     
-    } else {
-      setError('error'); // Mostramos el error.
-    }
+    
   };
 
 
@@ -89,7 +96,7 @@ const Medidas = () => {
       <p>Medidas registradas</p>
 
       <p>{error}</p>
-
+<p className='text-primary'>{editandoId ? 'Los datos del formulario son para actualizar' : 'Datos para un nuevo registro'}</p>
        <Form onSubmit={manejarEnvio}>
                   <Form.Group className="mb-3" controlId="usuario">
                     <Form.Label>CODIGO</Form.Label>
