@@ -10,6 +10,8 @@ const Medidas = () => {
   const [medidas, setMedidas] = useState([]);
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
+//para editar, hay que guardar el id del elemento seleccionado
+  const [editandoId, setEditandoId] = useState(null);
 
   //para registrar una unidad nueva, propiedades a recorger en el form
   const medida={
@@ -67,6 +69,21 @@ const Medidas = () => {
     }
   };
 
+
+  //edicion
+  const manejarEdicion = (medidaSeleccionada) => {
+    
+    setUnidad({
+      codUnidad:medidaSeleccionada.codUnidad,
+      descUnidad:medidaSeleccionada.descUnidad
+    });
+
+    setEditandoId(medidaSeleccionada.id);
+
+
+  };
+
+
   return (
     <Container className="py-5">
       <p>Medidas registradas</p>
@@ -104,7 +121,7 @@ const Medidas = () => {
                     className="w-100"
                   
                   >
-                    {cargando ? 'Ingresando...' : 'Ingresar'}
+                    {editandoId ? 'Actualizar' : 'Registrar'}
                   </Button>
                 </Form>
       <table className='table'>
@@ -113,6 +130,7 @@ const Medidas = () => {
               <th>ID</th>
               <th>Codigo</th>
               <th>Descripcion</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -121,6 +139,13 @@ const Medidas = () => {
                 <td>{medida.id}</td>
                 <td>{medida.codUnidad}</td>
                 <td>{medida.descUnidad}</td>
+                <td>
+
+                   <Button variant='primary' onClick={()=>manejarEdicion(medida)}>
+                      Editar
+                   </Button>
+
+                </td>
               </tr>
             ))}
             
