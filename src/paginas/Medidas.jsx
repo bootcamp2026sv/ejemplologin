@@ -72,7 +72,7 @@ const Medidas = () => {
 
 
  
-    const respuesta = await clienteApi.post('/UnidadDeMedidas',unidad);
+    
     
   };
 
