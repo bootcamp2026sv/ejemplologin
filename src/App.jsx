@@ -5,6 +5,7 @@ import Login from './paginas/Login';
 import Inicio from './paginas/Inicio';
 import Panel from './paginas/Panel';
 import Productos from './paginas/Productos';
+import Medidas from './paginas/Medidas';
 
  
 function App() {
@@ -31,10 +32,10 @@ function App() {
             }
           />
           <Route
-            path="/productos"
+            path="/medidas"
             element={
               <RutaProtegida>
-                <Productos />
+                <Medidas />
               </RutaProtegida>
             }
           />
